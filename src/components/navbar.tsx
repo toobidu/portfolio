@@ -20,9 +20,11 @@ export function Navbar() {
     <header className="border-border/40 bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur-md">
       <div className="container mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6 lg:max-w-6xl">
         <a href="#" className="group flex items-center gap-2">
-          <span className="bg-foreground text-background flex size-7 items-center justify-center rounded-md font-mono text-xs font-bold transition-transform group-hover:scale-105">
-            TD
-          </span>
+          <img
+            src="/144311473.png"
+            alt={personalInfo.englishName}
+            className="ring-border/60 size-7 rounded-md object-cover ring-1 transition-transform group-hover:scale-105"
+          />
           <span className="text-foreground text-sm font-medium tracking-tight">
             {personalInfo.englishName}
           </span>
@@ -43,17 +45,6 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          <a
-            href={personalInfo.resumePdf}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex"
-          >
-            <Button variant="outline" size="sm" className="h-8 gap-1.5 font-mono text-xs">
-              <FileText className="size-3.5" />
-              <span>CV.pdf</span>
-            </Button>
-          </a>
           <ThemeToggle />
           <Button
             variant="ghost"

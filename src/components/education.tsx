@@ -23,7 +23,6 @@ export function Education() {
             )}
             <div>
               <h3 className="text-foreground text-base font-semibold">{education.institution}</h3>
-              <p className="text-muted-foreground text-xs">{education.vietnameseInstitution}</p>
               <div className="text-primary pt-1 font-mono text-xs font-medium">
                 {education.degree} · {education.location}
               </div>
@@ -34,14 +33,14 @@ export function Education() {
           </span>
         </div>
 
-        <ul className="text-muted-foreground border-border/40 space-y-1.5 border-t pt-3 text-xs">
+        {/* <ul className="text-muted-foreground border-border/40 space-y-1.5 border-t pt-3 text-xs">
           {education.highlights.map((item, idx) => (
             <li key={idx} className="flex items-start gap-2">
               <span className="text-foreground/40 mt-0.5">›</span>
               <span>{item}</span>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </section>
   )

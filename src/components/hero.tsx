@@ -152,9 +152,9 @@ export function Hero() {
           <div className="flex shrink-0 justify-start md:justify-end">
             <div className="border-border/80 from-border/80 relative size-32 rounded-2xl border bg-gradient-to-b to-transparent p-1 shadow-md sm:size-36 md:size-40">
               <img
-                src="/me.jpg"
+                src={personalInfo.avatarUrl || '/me.jpg'}
                 alt={personalInfo.name}
-                className="size-full rounded-xl object-cover"
+                className="size-full rounded-xl object-cover object-top"
               />
               <div className="border-border/80 bg-background/95 absolute -right-1 -bottom-2 flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] shadow-xs backdrop-blur-xs">
                 <span className="size-2 animate-pulse rounded-full bg-emerald-500" />

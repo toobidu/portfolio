@@ -12,41 +12,87 @@ const sections = [
 
 export function ScrollProgress() {
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [trackProgress, setTrackProgress] = useState(0)
   const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false
+
+    const updateScrollState = () => {
       const scrollY = window.scrollY
       const docHeight = document.documentElement.scrollHeight
       const winHeight = window.innerHeight
       const totalScrollable = docHeight - winHeight
 
-      const progress =
+      // Overall page reading percentage (0 - 100%)
+      const pageProgress =
         totalScrollable > 0 ? Math.min(100, Math.max(0, (scrollY / totalScrollable) * 100)) : 0
-      setScrollProgress(progress)
+      setScrollProgress(pageProgress)
 
-      // When scrolled near bottom (within 80px or progress >= 98.5%), always activate last section
-      const isAtBottom =
-        totalScrollable > 0 && (winHeight + scrollY >= docHeight - 80 || progress >= 98.5)
-      if (isAtBottom) {
-        setActiveSection(sections[sections.length - 1].id)
+      // Boundary conditions: top of page
+      if (scrollY <= 15) {
+        setActiveSection(sections[0].id)
+        setTrackProgress(0)
         return
       }
 
-      // Proportional section spy: triggers when section top enters upper 35% of viewport
-      const scrollPos = scrollY + winHeight * 0.35
+      // Boundary conditions: near bottom of page
+      if (totalScrollable > 0 && (winHeight + scrollY >= docHeight - 60 || pageProgress >= 98.5)) {
+        setActiveSection(sections[sections.length - 1].id)
+        setTrackProgress(1)
+        return
+      }
+
+      // Proportional section spy: target line at 35% of viewport
+      const targetY = winHeight * 0.35
+      const scrollPos = scrollY + targetY
+
+      let currentIdx = 0
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i].id)
         if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sections[i].id)
+          currentIdx = i
           break
         }
       }
+
+      setActiveSection(sections[currentIdx].id)
+
+      // Calculate fractional progress through the current section
+      const currentEl = document.getElementById(sections[currentIdx].id)
+      const currentTop = currentEl ? currentEl.offsetTop : 0
+      let currentBottom = docHeight
+      if (currentIdx < sections.length - 1) {
+        const nextEl = document.getElementById(sections[currentIdx + 1].id)
+        currentBottom = nextEl
+          ? nextEl.offsetTop
+          : currentTop + (currentEl ? currentEl.offsetHeight : 0)
+      }
+
+      const currentHeight = Math.max(1, currentBottom - currentTop)
+      const fraction = Math.min(1, Math.max(0, (scrollPos - currentTop) / currentHeight))
+
+      // Interpolate along the tracker dots accurately
+      const lineProgress = Math.min(1, Math.max(0, (currentIdx + fraction) / (sections.length - 1)))
+      setTrackProgress(lineProgress)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(() => {
+          updateScrollState()
+          ticking = false
+        })
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    updateScrollState()
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   const scrollToSection = (id: string) => {
@@ -81,11 +127,11 @@ export function ScrollProgress() {
           {/* Background vertical line (runs from first dot center to last dot center) */}
           <div className="bg-border/70 absolute top-3 bottom-3 left-1/2 w-[2px] -translate-x-1/2 rounded-full" />
 
-          {/* Active progress vertical line (runs from first dot center up to exact scroll percentage) */}
+          {/* Active progress vertical line (runs from first dot center smoothly to current section position) */}
           <div
-            className="bg-primary absolute top-3 left-1/2 w-[2px] -translate-x-1/2 rounded-full transition-all duration-150"
+            className="bg-primary absolute top-3 left-1/2 w-[2px] -translate-x-1/2 rounded-full transition-[height] duration-75 ease-out"
             style={{
-              height: `calc((100% - 24px) * ${scrollProgress / 100})`,
+              height: `calc((100% - 24px) * ${trackProgress})`,
             }}
           />
 
@@ -93,9 +139,7 @@ export function ScrollProgress() {
           <div className="relative z-10 flex flex-col gap-5">
             {sections.map((sec, index) => {
               const isActive = index === activeIndex
-              const isPassed =
-                !isActive &&
-                (index < activeIndex || scrollProgress >= (index / (sections.length - 1)) * 100 - 1)
+              const isPassed = index < activeIndex
 
               return (
                 <div key={sec.id} className="group relative flex items-center">
