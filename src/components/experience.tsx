@@ -1,4 +1,4 @@
-import { Briefcase } from 'lucide-react'
+import { Briefcase, FolderGit2 } from 'lucide-react'
 import { getTechIcon } from '@/components/tech-icons'
 import { Badge } from '@/components/ui/badge'
 import { experiences } from '@/data/portfolio'
@@ -13,35 +13,109 @@ export function Experience() {
         </h2>
       </div>
 
-      <div className="border-border/80 relative ml-2 space-y-10 border-l pl-6">
+      <div className="border-border/80 relative ml-2 space-y-12 border-l pl-6">
         {experiences.map((item) => (
           <div key={item.company} className="group relative">
             {/* Timeline bullet */}
             <div className="border-background bg-foreground/60 group-hover:bg-foreground absolute top-1.5 -left-[31px] size-2.5 rounded-full border-2 transition-colors" />
 
-            <div className="space-y-3">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                <h3 className="text-foreground text-base font-semibold">
-                  {item.role}{' '}
-                  <span className="text-muted-foreground font-normal">· {item.company}</span>
-                </h3>
-                <span className="text-muted-foreground font-mono text-xs">{item.period}</span>
+            <div className="space-y-4">
+              {/* Company & Role Header */}
+              <div className="space-y-1">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <h3 className="text-foreground text-lg font-bold tracking-tight">
+                    {item.role} <span className="text-primary font-medium">· {item.company}</span>
+                  </h3>
+                  <span className="text-muted-foreground font-mono text-xs">{item.period}</span>
+                </div>
+
+                <div className="text-muted-foreground/80 font-mono text-xs">{item.location}</div>
+
+                {item.description && (
+                  <p className="text-muted-foreground/90 pt-1 text-xs italic">{item.description}</p>
+                )}
               </div>
 
-              <div className="text-muted-foreground/80 font-mono text-xs">{item.location}</div>
+              {/* Company Projects List */}
+              {item.projects && item.projects.length > 0 ? (
+                <div className="mt-3 space-y-4">
+                  {item.projects.map((proj, pIdx) => (
+                    <div
+                      key={pIdx}
+                      className="border-border/50 bg-card/30 hover:border-border/90 rounded-lg border p-4 transition-colors"
+                    >
+                      {/* Project Header */}
+                      <div className="border-border/30 flex flex-wrap items-start justify-between gap-2 border-b pb-2.5">
+                        <div className="flex items-center gap-2">
+                          <FolderGit2 className="text-primary size-3.5 shrink-0" />
+                          <h4 className="text-foreground text-sm font-semibold tracking-tight">
+                            {proj.name}
+                          </h4>
+                        </div>
+                        {proj.period && (
+                          <span className="text-muted-foreground font-mono text-[11px]">
+                            {proj.period}
+                          </span>
+                        )}
+                      </div>
 
-              {/* Highlights */}
-              <ul className="text-muted-foreground mt-2 space-y-2 text-sm leading-relaxed">
-                {item.highlights.map((point, pIdx) => (
-                  <li key={pIdx} className="flex items-start gap-2">
-                    <span className="text-foreground/40 mt-1 select-none">›</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
+                      {/* Project Description */}
+                      {proj.description && (
+                        <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
+                          {proj.description}
+                        </p>
+                      )}
 
-              {/* Tech Tags with Icons */}
-              <div className="flex flex-wrap gap-1.5 pt-2">
+                      {/* Project Achievements */}
+                      <ul className="text-muted-foreground mt-2.5 space-y-2 text-xs leading-relaxed">
+                        {proj.achievements.map((ach, aIdx) => (
+                          <li key={aIdx} className="flex items-start gap-2">
+                            <span className="text-primary/70 mt-0.5 text-[11px] font-bold select-none">
+                              ›
+                            </span>
+                            <span className="text-foreground/85">{ach}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Project Tech Stack */}
+                      <div className="border-border/20 mt-3.5 flex flex-wrap gap-1.5 border-t pt-2">
+                        {proj.technologies.map((tech) => {
+                          const icon = getTechIcon(tech)
+                          return (
+                            <Badge
+                              key={tech}
+                              variant="outline"
+                              className="text-foreground/75 border-border/50 gap-1 rounded px-1.5 py-0.5 font-mono text-[10px]"
+                            >
+                              {icon && <span className="text-foreground/70">{icon}</span>}
+                              <span>{tech}</span>
+                            </Badge>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                /* Fallback to flat highlights if no projects */
+                item.highlights && (
+                  <ul className="text-muted-foreground mt-2 space-y-2 text-sm leading-relaxed">
+                    {item.highlights.map((point, pIdx) => (
+                      <li key={pIdx} className="flex items-start gap-2">
+                        <span className="text-foreground/40 mt-1 select-none">›</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              )}
+
+              {/* Company-wide Tech Overview */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-2">
+                <span className="text-muted-foreground mr-1 font-mono text-[11px] font-medium">
+                  Stack:
+                </span>
                 {item.tags.map((tag) => {
                   const icon = getTechIcon(tag)
                   return (
