@@ -65,7 +65,7 @@ export const personalInfo = {
   },
   metrics: [
     {
-      value: '5,000+',
+      value: '1,000+',
       label: 'IoT Devices Scaled',
       detail: 'Sustained telemetry across 17 modules for Ministry of Public Safety with 0 downtime',
     },
