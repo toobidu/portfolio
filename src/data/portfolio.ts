@@ -141,7 +141,6 @@ export const experiences: ExperienceItem[] = [
           'NMEA Protocol',
           'Hardware SDK',
           'Android/Embedded',
-          'Linux',
         ],
       },
       {
@@ -348,14 +347,7 @@ export const projects: ProjectItem[] = [
       'Completed full violation citation flow and thermal printing in under 10 seconds',
       'Deployed successfully on specialized inspection devices in active field operations',
     ],
-    technologies: [
-      'Kotlin',
-      'GPS Modules',
-      'NMEA Protocol',
-      'Hardware SDK',
-      'Android/Embedded',
-      'Linux',
-    ],
+    technologies: ['Kotlin', 'GPS Modules', 'NMEA Protocol', 'Hardware SDK', 'Android/Embedded'],
   },
   {
     title: 'Enterprise Backend & Dynamic RBAC Platform',

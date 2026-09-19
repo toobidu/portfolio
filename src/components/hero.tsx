@@ -49,17 +49,15 @@ export function Hero() {
         { name: 'RabbitMQ', icon: <RabbitMqIcon className="size-3.5" /> },
         { name: 'WebRTC', icon: <WebRtcIcon className="size-3.5" /> },
         { name: 'React', icon: <ReactIcon className="size-3.5" /> },
+        { name: 'TypeScript', icon: <TypeScriptIcon className="size-3.5" /> },
+        { name: 'Docker', icon: <DockerIcon className="size-3.5" /> },
       ],
     },
     {
       title: 'Hardware & Linux Delivery',
       icon: Layers,
-      desc: 'Deep hardware SDK integration, parsing real-time NMEA GPS sentences (Kotlin), Docker containerization, and production Linux deployment with custom domain/SSL.',
-      techs: [
-        { name: 'Kotlin', icon: <KotlinIcon className="size-3.5" /> },
-        { name: 'TypeScript', icon: <TypeScriptIcon className="size-3.5" /> },
-        { name: 'Docker', icon: <DockerIcon className="size-3.5" /> },
-      ],
+      desc: 'Deep hardware SDK integration, parsing real-time NMEA GPS sentences (Kotlin), and production Linux deployment with custom domain/SSL.',
+      techs: [{ name: 'Kotlin', icon: <KotlinIcon className="size-3.5" /> }],
     },
   ]
 
