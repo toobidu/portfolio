@@ -8,8 +8,6 @@ export function Skills() {
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [scrollLeftState, setScrollLeftState] = useState(0)
 
   const checkScroll = () => {
     if (scrollRef.current) {
@@ -39,25 +37,42 @@ export function Skills() {
     }
   }
 
-  // Mouse drag-to-scroll handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return
-    setIsDragging(true)
-    setStartX(e.pageX - scrollRef.current.offsetLeft)
-    setScrollLeftState(scrollRef.current.scrollLeft)
-  }
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return
-    e.preventDefault()
-    const x = e.pageX - scrollRef.current.offsetLeft
-    const walk = (x - startX) * 1.5
-    scrollRef.current.scrollLeft = scrollLeftState - walk
-  }
+    let isDown = false
+    let startX = 0
+    let scrollLeft = 0
 
-  const handleMouseUpOrLeave = () => {
-    setIsDragging(false)
-  }
+    const onMouseDown = (e: MouseEvent) => {
+      isDown = true
+      setIsDragging(true)
+      startX = e.pageX - el.offsetLeft
+      scrollLeft = el.scrollLeft
+    }
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDown) return
+      e.preventDefault()
+      const x = e.pageX - el.offsetLeft
+      const walk = (x - startX) * 1.5
+      el.scrollLeft = scrollLeft - walk
+    }
+    const onMouseUp = () => {
+      isDown = false
+      setIsDragging(false)
+    }
+
+    el.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+
+    return () => {
+      el.removeEventListener('mousedown', onMouseDown)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+  }, [])
 
   return (
     <section id="skills" className="border-border/60 scroll-mt-16 border-b py-12">
@@ -130,14 +145,7 @@ export function Skills() {
         {/* Horizontal Track */}
         <div
           ref={scrollRef}
-          role="region"
-          aria-label="Skills categories horizontal deck"
-          tabIndex={0}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUpOrLeave}
-          onMouseLeave={handleMouseUpOrLeave}
-          className={`flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pt-1 pb-4 focus:outline-none ${
+          className={`flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pt-1 pb-4 ${
             isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
           }`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}

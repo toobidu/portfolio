@@ -543,50 +543,56 @@ export function ApachePoiIcon({ className = 'size-4', ...props }: IconProps) {
   )
 }
 
+type IconRenderer = (className: string) => React.ReactNode
+
+const iconMatchers: ReadonlyArray<Readonly<{ patterns: readonly string[]; render: IconRenderer }>> =
+  [
+    { patterns: ['sql server', 'mssql'], render: (c) => <SqlServerIcon className={c} /> },
+    { patterns: ['kotlin'], render: (c) => <KotlinIcon className={c} /> },
+    { patterns: ['typescript', 'ts'], render: (c) => <TypeScriptIcon className={c} /> },
+    { patterns: ['javascript', 'js'], render: (c) => <JavaScriptIcon className={c} /> },
+    { patterns: ['python'], render: (c) => <PythonIcon className={c} /> },
+    { patterns: ['c#', 'csharp'], render: (c) => <CSharpIcon className={c} /> },
+    { patterns: ['spring'], render: (c) => <SpringBootIcon className={c} /> },
+    { patterns: ['react'], render: (c) => <ReactIcon className={c} /> },
+    { patterns: ['vite'], render: (c) => <ViteIcon className={c} /> },
+    { patterns: ['tailwind'], render: (c) => <TailwindIcon className={c} /> },
+    { patterns: ['zustand'], render: (c) => <ZustandIcon className={c} /> },
+    { patterns: ['cloudflare'], render: (c) => <CloudflareIcon className={c} /> },
+    { patterns: ['poi', 'apache'], render: (c) => <ApachePoiIcon className={c} /> },
+    { patterns: ['gitlab'], render: (c) => <GitLabIcon className={c} /> },
+    { patterns: ['github', 'git'], render: (c) => <GitHubIcon className={c} /> },
+    { patterns: ['linkedin', 'linkin'], render: (c) => <LinkedinIcon className={c} /> },
+    { patterns: ['telegram'], render: (c) => <TelegramIcon className={c} /> },
+    { patterns: ['postman'], render: (c) => <PostmanIcon className={c} /> },
+    { patterns: ['jira'], render: (c) => <JiraIcon className={c} /> },
+    { patterns: ['nginx'], render: (c) => <NginxIcon className={c} /> },
+    { patterns: ['ssl', 'tls'], render: (c) => <SslIcon className={c} /> },
+    { patterns: ['vietmap'], render: (c) => <VietmapIcon className={c} /> },
+    { patterns: ['docker'], render: (c) => <DockerIcon className={c} /> },
+    { patterns: ['linux', 'ubuntu', 'debian'], render: (c) => <LinuxIcon className={c} /> },
+    { patterns: ['postgres', 'postgrest'], render: (c) => <PostgresIcon className={c} /> },
+    { patterns: ['redis'], render: (c) => <RedisIcon className={c} /> },
+    { patterns: ['mysql'], render: (c) => <MysqlIcon className={c} /> },
+    { patterns: ['oracle'], render: (c) => <OracleIcon className={c} /> },
+    { patterns: ['mqtt', 'mosquitto'], render: (c) => <MqttIcon className={c} /> },
+    { patterns: ['rabbit'], render: (c) => <RabbitMqIcon className={c} /> },
+    { patterns: ['webrtc'], render: (c) => <WebRtcIcon className={c} /> },
+    { patterns: ['ffmpeg'], render: (c) => <FFmpegIcon className={c} /> },
+    { patterns: ['hls'], render: (c) => <HlsIcon className={c} /> },
+    { patterns: ['thingsboard'], render: (c) => <ThingsBoardIcon className={c} /> },
+    { patterns: ['camera', 'onvif'], render: (c) => <CameraIcon className={c} /> },
+    { patterns: ['websocket', 'socket.io'], render: (c) => <WebSocketIcon className={c} /> },
+    { patterns: ['minio'], render: (c) => <MinioIcon className={c} /> },
+    { patterns: ['java'], render: (c) => <JavaIcon className={c} /> },
+  ]
+
 // eslint-disable-next-line react-refresh/only-export-components
-export function getTechIcon(name: string, className = 'size-4') {
+export function getTechIcon(name: string, className = 'size-4'): React.ReactNode {
   const n = name.toLowerCase().trim()
-  if (n.includes('sql server') || n.includes('mssql'))
-    return <SqlServerIcon className={className} />
-  if (n.includes('java') && !n.includes('script')) return <JavaIcon className={className} />
-  if (n.includes('kotlin')) return <KotlinIcon className={className} />
-  if (n.includes('typescript') || n === 'ts') return <TypeScriptIcon className={className} />
-  if (n.includes('javascript') || n === 'js') return <JavaScriptIcon className={className} />
-  if (n.includes('python')) return <PythonIcon className={className} />
-  if (n.includes('c#') || n.includes('csharp')) return <CSharpIcon className={className} />
-  if (n.includes('spring')) return <SpringBootIcon className={className} />
-  if (n.includes('react')) return <ReactIcon className={className} />
-  if (n.includes('vite')) return <ViteIcon className={className} />
-  if (n.includes('tailwind')) return <TailwindIcon className={className} />
-  if (n.includes('zustand')) return <ZustandIcon className={className} />
-  if (n.includes('cloudflare')) return <CloudflareIcon className={className} />
-  if (n.includes('poi') || n.includes('apache')) return <ApachePoiIcon className={className} />
-  if (n.includes('gitlab')) return <GitLabIcon className={className} />
-  if (n.includes('github') || n === 'git') return <GitHubIcon className={className} />
-  if (n.includes('linkedin') || n.includes('linkin')) return <LinkedinIcon className={className} />
-  if (n.includes('telegram')) return <TelegramIcon className={className} />
-  if (n.includes('postman')) return <PostmanIcon className={className} />
-  if (n.includes('jira')) return <JiraIcon className={className} />
-  if (n.includes('nginx')) return <NginxIcon className={className} />
-  if (n.includes('ssl') || n.includes('tls')) return <SslIcon className={className} />
-  if (n.includes('vietmap')) return <VietmapIcon className={className} />
-  if (n.includes('docker')) return <DockerIcon className={className} />
-  if (n.includes('linux') || n.includes('ubuntu') || n.includes('debian'))
-    return <LinuxIcon className={className} />
-  if (n.includes('postgres') || n.includes('postgrest'))
-    return <PostgresIcon className={className} />
-  if (n.includes('redis')) return <RedisIcon className={className} />
-  if (n.includes('mysql')) return <MysqlIcon className={className} />
-  if (n.includes('oracle')) return <OracleIcon className={className} />
-  if (n.includes('mqtt') || n.includes('mosquitto')) return <MqttIcon className={className} />
-  if (n.includes('rabbit')) return <RabbitMqIcon className={className} />
-  if (n.includes('webrtc')) return <WebRtcIcon className={className} />
-  if (n.includes('ffmpeg')) return <FFmpegIcon className={className} />
-  if (n.includes('hls')) return <HlsIcon className={className} />
-  if (n.includes('thingsboard')) return <ThingsBoardIcon className={className} />
-  if (n.includes('camera') || n.includes('onvif')) return <CameraIcon className={className} />
-  if (n.includes('websocket') || n.includes('socket.io'))
-    return <WebSocketIcon className={className} />
-  if (n.includes('minio')) return <MinioIcon className={className} />
-  return null
+  if (n.includes('javascript')) {
+    return <JavaScriptIcon className={className} />
+  }
+  const match = iconMatchers.find((m) => m.patterns.some((p) => n.includes(p)))
+  return match ? match.render(className) : null
 }
