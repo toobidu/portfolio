@@ -250,9 +250,9 @@ export function Projects() {
                     <div className="text-foreground/80 font-mono text-[11px] font-semibold tracking-wider uppercase">
                       Key Outcomes & Metrics:
                     </div>
-                    {proj.results.map((res, rIdx) => (
+                    {proj.results.map((res) => (
                       <div
-                        key={rIdx}
+                        key={`${proj.title}-${res}`}
                         className="text-muted-foreground flex items-start gap-2 text-xs"
                       >
                         <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-emerald-500" />
@@ -287,18 +287,21 @@ export function Projects() {
       {/* Pagination indicators / dots */}
       {count > 1 && (
         <div className="mt-6 flex items-center justify-center gap-2">
-          {Array.from({ length: count }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => api?.scrollTo(idx)}
-              aria-label={`Jump to slide ${idx + 1}`}
-              className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
-                current === idx + 1
-                  ? 'bg-foreground w-6'
-                  : 'bg-muted-foreground/30 hover:bg-muted-foreground/60 w-2'
-              }`}
-            />
-          ))}
+          {Array.from({ length: count }, (_, idx) => `project-slide-dot-${idx}`).map(
+            (slideKey, idx) => (
+              <button
+                key={slideKey}
+                type="button"
+                onClick={() => api?.scrollTo(idx)}
+                aria-label={`Jump to slide ${idx + 1}`}
+                className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
+                  current === idx + 1
+                    ? 'bg-foreground w-6'
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/60 w-2'
+                }`}
+              />
+            ),
+          )}
         </div>
       )}
     </section>

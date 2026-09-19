@@ -1,7 +1,7 @@
-export function GithubIcon({ className = 'size-4' }: { className?: string }) {
+export function GithubIcon({ className = 'size-4' }: Readonly<{ className?: string }>) {
   return (
     <svg
-      role="img"
+      aria-hidden="true"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -16,7 +16,7 @@ export function GithubIcon({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-export function LinkedinIcon({ className = 'size-4' }: { className?: string }) {
+export function LinkedinIcon({ className = 'size-4' }: Readonly<{ className?: string }>) {
   return (
     <img
       src="/linkedin-1-svgrepo-com.svg"
@@ -26,7 +26,7 @@ export function LinkedinIcon({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-export function TelegramIcon({ className = 'size-4' }: { className?: string }) {
+export function TelegramIcon({ className = 'size-4' }: Readonly<{ className?: string }>) {
   return (
     <img
       src="/telegram.svg"

@@ -1,9 +1,11 @@
 import React from 'react'
 
-export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  className?: string
-  alt?: string
-}
+export type IconProps = Readonly<
+  React.SVGProps<SVGSVGElement> & {
+    className?: string
+    alt?: string
+  }
+>
 
 // Java Logo (Devicon)
 export function JavaIcon({ className = 'size-4', ...props }: IconProps) {

@@ -39,9 +39,9 @@ export function Experience() {
               {/* Company Projects List */}
               {item.projects && item.projects.length > 0 ? (
                 <div className="mt-3 space-y-4">
-                  {item.projects.map((proj, pIdx) => (
+                  {item.projects.map((proj) => (
                     <div
-                      key={pIdx}
+                      key={proj.name}
                       className="border-border/75 bg-card/50 hover:border-foreground/25 hover:bg-card/80 group/sub relative overflow-hidden rounded-lg border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs"
                     >
                       {/* Subtle top edge highlight */}
@@ -71,8 +71,8 @@ export function Experience() {
 
                       {/* Project Achievements */}
                       <ul className="text-muted-foreground mt-2.5 space-y-2 text-xs leading-relaxed">
-                        {proj.achievements.map((ach, aIdx) => (
-                          <li key={aIdx} className="flex items-start gap-2">
+                        {proj.achievements.map((ach) => (
+                          <li key={`${proj.name}-${ach}`} className="flex items-start gap-2">
                             <span className="text-primary/70 mt-0.5 text-[11px] font-bold select-none">
                               ›
                             </span>
@@ -104,8 +104,8 @@ export function Experience() {
                 /* Fallback to flat highlights if no projects */
                 item.highlights && (
                   <ul className="text-muted-foreground mt-2 space-y-2 text-sm leading-relaxed">
-                    {item.highlights.map((point, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-2">
+                    {item.highlights.map((point) => (
+                      <li key={`${item.company}-${point}`} className="flex items-start gap-2">
                         <span className="text-foreground/40 mt-1 select-none">›</span>
                         <span>{point}</span>
                       </li>

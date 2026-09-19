@@ -130,11 +130,14 @@ export function Skills() {
         {/* Horizontal Track */}
         <div
           ref={scrollRef}
+          role="region"
+          aria-label="Skills categories horizontal deck"
+          tabIndex={0}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUpOrLeave}
           onMouseLeave={handleMouseUpOrLeave}
-          className={`flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pt-1 pb-4 ${
+          className={`flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pt-1 pb-4 focus:outline-none ${
             isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
           }`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}

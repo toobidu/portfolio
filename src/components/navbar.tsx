@@ -19,7 +19,7 @@ export function Navbar() {
   return (
     <header className="border-border/40 bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur-md">
       <div className="container mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6 lg:max-w-6xl">
-        <a href="#" className="group flex items-center gap-2">
+        <a href="#hero" className="group flex items-center gap-2">
           <img
             src="/144311473.png"
             alt={personalInfo.englishName}
