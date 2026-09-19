@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Check, Copy, Download, Layers, Mail, Radio, Server } from 'lucide-react'
-import { GithubIcon, LinkedinIcon } from '@/components/icons'
+import { GithubIcon, LinkedinIcon, TelegramIcon } from '@/components/icons'
 import {
   DockerIcon,
   JavaIcon,
@@ -31,7 +31,7 @@ export function Hero() {
     {
       title: 'Backend & High Concurrency',
       icon: Server,
-      desc: 'Thiết kế RESTful API & Microservices trên Java Spring Boot, tối ưu hàng đợi RabbitMQ, kiến trúc dynamic authorization và cache đa tầng với Redis.',
+      desc: 'Architecting RESTful APIs & Microservices on Java Spring Boot, RabbitMQ message optimization, Redis multi-tier caching, and dynamic authorization.',
       techs: [
         { name: 'Java', icon: <JavaIcon className="size-3.5" /> },
         { name: 'Spring Boot', icon: <SpringBootIcon className="size-3.5" /> },
@@ -43,7 +43,7 @@ export function Hero() {
     {
       title: 'Real-time Streaming & IoT',
       icon: Radio,
-      desc: 'Điều phối luồng telemetry 5.000+ thiết bị qua Mosquitto MQTT QoS 1, pipeline video camera ONVIF (RTSP → WebRTC 2-way talk & HLS DVR playback với FFmpeg).',
+      desc: 'Ingesting high-throughput telemetry for 5,000+ IoT devices via Mosquitto MQTT QoS 1, ONVIF camera pipelines (RTSP → WebRTC 2-way talk & HLS DVR playback with FFmpeg).',
       techs: [
         { name: 'MQTT', icon: <MqttIcon className="size-3.5" /> },
         { name: 'RabbitMQ', icon: <RabbitMqIcon className="size-3.5" /> },
@@ -54,7 +54,7 @@ export function Hero() {
     {
       title: 'Hardware & Linux Delivery',
       icon: Layers,
-      desc: 'Tích hợp sâu SDK phần cứng, bóc tách trực tiếp bản tin GPS NMEA (Kotlin), đóng gói Docker và trực tiếp triển khai máy chủ Linux, domain/SSL thực tế cho khách hàng.',
+      desc: 'Deep hardware SDK integration, parsing real-time NMEA GPS sentences (Kotlin), Docker containerization, and production Linux deployment with custom domain/SSL.',
       techs: [
         { name: 'Kotlin', icon: <KotlinIcon className="size-3.5" /> },
         { name: 'TypeScript', icon: <TypeScriptIcon className="size-3.5" /> },
@@ -144,6 +144,15 @@ export function Hero() {
                 >
                   <LinkedinIcon className="size-4" />
                 </a>
+                <a
+                  href={personalInfo.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted inline-flex size-8 items-center justify-center rounded-md border transition-colors"
+                  aria-label="Telegram Profile"
+                >
+                  <TelegramIcon className="size-4" />
+                </a>
               </div>
             </div>
           </div>
@@ -169,15 +178,17 @@ export function Hero() {
           {personalInfo.metrics.map((metric) => (
             <div
               key={metric.label}
-              className="border-border/70 bg-card/40 hover:border-border rounded-lg border p-4 transition-colors"
+              className="border-border/75 bg-card/50 hover:border-foreground/25 hover:bg-card/80 group relative overflow-hidden rounded-lg border p-4.5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs"
             >
-              <div className="text-foreground font-mono text-2xl font-bold tracking-tight sm:text-3xl">
+              {/* Subtle top edge highlight */}
+              <div className="from-foreground/15 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r to-transparent" />
+              <div className="text-foreground font-mono text-2xl font-bold tracking-tight transition-colors sm:text-3xl">
                 {metric.value}
               </div>
-              <div className="text-muted-foreground mt-0.5 font-mono text-xs font-semibold tracking-wider uppercase">
+              <div className="text-foreground/80 mt-1 font-mono text-[11px] font-semibold tracking-wider uppercase">
                 {metric.label}
               </div>
-              <p className="text-muted-foreground mt-2 text-xs leading-normal">{metric.detail}</p>
+              <p className="text-muted-foreground mt-2 text-xs leading-relaxed">{metric.detail}</p>
             </div>
           ))}
         </div>
@@ -189,23 +200,25 @@ export function Hero() {
             return (
               <div
                 key={pillar.title}
-                className="border-border/70 bg-card/40 hover:border-border flex flex-col justify-between space-y-3 rounded-lg border p-4.5 transition-colors"
+                className="border-border/75 bg-card/50 hover:border-foreground/25 hover:bg-card/80 group relative flex flex-col justify-between space-y-3.5 overflow-hidden rounded-lg border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs"
               >
+                {/* Subtle top edge highlight */}
+                <div className="from-foreground/15 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r to-transparent" />
                 <div className="space-y-2">
-                  <div className="text-foreground flex items-center gap-2 text-sm font-semibold">
-                    <span className="border-border/60 bg-muted/40 text-muted-foreground flex size-7 items-center justify-center rounded-md border">
+                  <div className="text-foreground flex items-center gap-2.5 text-sm font-semibold">
+                    <span className="border-border/70 bg-muted/40 text-foreground/80 group-hover:border-foreground/30 group-hover:text-foreground flex size-7 items-center justify-center rounded-md border transition-colors">
                       <Icon className="size-4" />
                     </span>
-                    <span>{pillar.title}</span>
+                    <span className="tracking-tight">{pillar.title}</span>
                   </div>
                   <p className="text-muted-foreground text-xs leading-relaxed">{pillar.desc}</p>
                 </div>
 
-                <div className="border-border/40 flex flex-wrap gap-1.5 border-t pt-2">
+                <div className="border-border/40 flex flex-wrap gap-1.5 border-t pt-3">
                   {pillar.techs.map((t) => (
                     <span
                       key={t.name}
-                      className="bg-muted/40 text-foreground/90 border-border/50 inline-flex items-center gap-1 rounded border px-2 py-0.5 font-mono text-[11px]"
+                      className="bg-muted/40 text-foreground/90 border-border/60 hover:border-foreground/30 hover:bg-muted/70 inline-flex items-center gap-1 rounded border px-2 py-0.5 font-mono text-[11px] transition-colors"
                     >
                       {t.icon}
                       <span>{t.name}</span>

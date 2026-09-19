@@ -9,7 +9,9 @@ export function Education() {
         <h2 className="font-heading text-foreground text-xl font-bold tracking-tight">Education</h2>
       </div>
 
-      <div className="border-border/60 bg-card/30 space-y-4 rounded-lg border p-5">
+      <div className="border-border/75 bg-card/50 hover:border-foreground/20 group relative space-y-4 overflow-hidden rounded-lg border p-5 transition-all duration-200">
+        {/* Subtle top edge highlight */}
+        <div className="from-foreground/15 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r to-transparent" />
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
           <div className="flex items-start gap-3.5">
             {education.logoUrl && (
@@ -33,14 +35,16 @@ export function Education() {
           </span>
         </div>
 
-        {/* <ul className="text-muted-foreground border-border/40 space-y-1.5 border-t pt-3 text-xs">
-          {education.highlights.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2">
-              <span className="text-foreground/40 mt-0.5">›</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul> */}
+        {/* {education.highlights && education.highlights.length > 0 && (
+          <ul className="border-border/40 text-muted-foreground space-y-1.5 border-t pt-3 text-xs">
+            {education.highlights.map((item, idx) => (
+              <li key={idx} className="flex items-start gap-2">
+                <span className="text-foreground/40 mt-0.5">›</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )} */}
       </div>
     </section>
   )

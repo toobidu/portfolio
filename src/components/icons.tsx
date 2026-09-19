@@ -25,3 +25,13 @@ export function LinkedinIcon({ className = 'size-4' }: { className?: string }) {
     />
   )
 }
+
+export function TelegramIcon({ className = 'size-4' }: { className?: string }) {
+  return (
+    <img
+      src="/telegram.svg"
+      alt="Telegram"
+      className={`${className} inline-block shrink-0 object-contain`}
+    />
+  )
+}

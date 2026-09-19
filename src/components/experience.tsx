@@ -42,10 +42,13 @@ export function Experience() {
                   {item.projects.map((proj, pIdx) => (
                     <div
                       key={pIdx}
-                      className="border-border/50 bg-card/30 hover:border-border/90 rounded-lg border p-4 transition-colors"
+                      className="border-border/75 bg-card/50 hover:border-foreground/25 hover:bg-card/80 group/sub relative overflow-hidden rounded-lg border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs"
                     >
+                      {/* Subtle top edge highlight */}
+                      <div className="from-foreground/15 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r to-transparent" />
+
                       {/* Project Header */}
-                      <div className="border-border/30 flex flex-wrap items-start justify-between gap-2 border-b pb-2.5">
+                      <div className="border-border/40 flex flex-wrap items-start justify-between gap-2 border-b pb-3">
                         <div className="flex items-center gap-2">
                           <FolderGit2 className="text-primary size-3.5 shrink-0" />
                           <h4 className="text-foreground text-sm font-semibold tracking-tight">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Check, Copy, Download, Mail, Phone } from 'lucide-react'
-import { GithubIcon, LinkedinIcon } from '@/components/icons'
+import { GithubIcon, LinkedinIcon, TelegramIcon } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { personalInfo } from '@/data/portfolio'
 
@@ -22,11 +22,13 @@ export function Contact() {
         </h2>
       </div>
 
-      <div className="border-border/60 bg-card/40 space-y-6 rounded-lg border p-6">
+      <div className="border-border/75 bg-card/50 hover:border-foreground/20 group relative space-y-6 overflow-hidden rounded-lg border p-6 transition-all duration-200">
+        {/* Subtle top edge highlight */}
+        <div className="from-foreground/15 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r to-transparent" />
         <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">
           I am actively seeking remote fullstack / backend engineering opportunities with European
-          and global teams. Feel free to reach out directly via email or connect with me on
-          LinkedIn.
+          and global teams. Feel free to reach out directly via email, Telegram, or connect with me
+          on LinkedIn.
         </p>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -51,6 +53,13 @@ export function Contact() {
             <span>{copied ? 'Copied' : personalInfo.email}</span>
           </Button>
 
+          <a href={personalInfo.telegram} target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="sm" className="gap-2 font-mono text-xs">
+              <TelegramIcon className="size-3.5" />
+              <span>@{personalInfo.telegramUsername}</span>
+            </Button>
+          </a>
+
           <a href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`}>
             <Button variant="outline" size="sm" className="gap-2 font-mono text-xs">
               <Phone className="size-3.5" />
@@ -66,7 +75,7 @@ export function Contact() {
           </a>
         </div>
 
-        <div className="border-border/40 text-muted-foreground flex items-center gap-4 border-t pt-2 text-xs">
+        <div className="border-border/40 text-muted-foreground flex flex-wrap items-center gap-4 border-t pt-2 text-xs">
           <a
             href={personalInfo.github}
             target="_blank"
@@ -85,6 +94,16 @@ export function Contact() {
           >
             <LinkedinIcon className="size-3.5" />
             <span>linkedin.com/in/{personalInfo.linkedinUsername}</span>
+          </a>
+
+          <a
+            href={personalInfo.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
+          >
+            <TelegramIcon className="size-3.5" />
+            <span>t.me/{personalInfo.telegramUsername}</span>
           </a>
         </div>
       </div>

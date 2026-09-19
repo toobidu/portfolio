@@ -470,6 +470,17 @@ export function LinkedinIcon({ className = 'size-4', alt = 'LinkedIn' }: IconPro
   )
 }
 
+// User Custom SVG: Telegram
+export function TelegramIcon({ className = 'size-4', alt = 'Telegram' }: IconProps) {
+  return (
+    <img
+      src="/telegram.svg"
+      alt={alt}
+      className={`${className} inline-block shrink-0 object-contain`}
+    />
+  )
+}
+
 // Nginx Logo
 export function NginxIcon({ className = 'size-4', ...props }: IconProps) {
   return (
@@ -551,6 +562,7 @@ export function getTechIcon(name: string, className = 'size-4') {
   if (n.includes('gitlab')) return <GitLabIcon className={className} />
   if (n.includes('github') || n === 'git') return <GitHubIcon className={className} />
   if (n.includes('linkedin') || n.includes('linkin')) return <LinkedinIcon className={className} />
+  if (n.includes('telegram')) return <TelegramIcon className={className} />
   if (n.includes('postman')) return <PostmanIcon className={className} />
   if (n.includes('jira')) return <JiraIcon className={className} />
   if (n.includes('nginx')) return <NginxIcon className={className} />

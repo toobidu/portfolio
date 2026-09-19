@@ -25,6 +25,7 @@ export interface ProjectItem {
   period?: string
   category: 'Production / In-House' | 'Personal / Architecture'
   companyContext?: string
+  architectureFlow?: string
   problem: string
   solution: string
   results: string[]
@@ -50,6 +51,8 @@ export const personalInfo = {
   githubUsername: 'toobidu',
   linkedin: 'https://linkedin.com/in/toobidu',
   linkedinUsername: 'toobidu',
+  telegram: 'https://t.me/dungtoiday',
+  telegramUsername: 'dungtoiday',
   location: 'Hanoi, Vietnam',
   resumePdf: '/To_Tien_Dung_Fullstack_Software_Engineering.pdf',
   summary:
@@ -359,6 +362,8 @@ export const projects: ProjectItem[] = [
     period: 'Feb 2025 – Aug 2025',
     category: 'Production / In-House',
     companyContext: 'METASOL Future Digital Technology',
+    architectureFlow:
+      'Client ➔ Spring Security ➔ Redis Token Cache ➔ Spring Cache / POI Worker ➔ MySQL',
     problem:
       'Enterprise operations required dynamic permission changes with zero session re-login, memory-safe processing of large multi-thousand-row Excel reports, and fortified credential recovery.',
     solution:
@@ -387,6 +392,8 @@ export const projects: ProjectItem[] = [
     period: 'Jul 2024 – Dec 2024',
     category: 'Production / In-House',
     companyContext: 'IT Solutions & Resources, JSC',
+    architectureFlow:
+      'Client ➔ Spring Cloud Gateway ➔ Eureka Discovery Mesh ➔ Microservices ➔ Oracle DB',
     problem:
       'Needed a scalable distributed microservices blueprint ensuring dynamic service discovery, unified request filtering, and relational transaction integrity on enterprise Oracle Database.',
     solution:
@@ -412,6 +419,8 @@ export const projects: ProjectItem[] = [
     period: 'Jul 2025 – Aug 2025',
     category: 'Personal / Architecture',
     companyContext: 'Personal Project',
+    architectureFlow:
+      'Web Clients ➔ Socket.io Duplex ➔ C# Core Engine ➔ Redis In-Memory State ➔ PostgreSQL',
     problem:
       'Synchronizing live multiplayer game rooms, instant scoring, and real-time leaderboards with minimal server resource consumption compared to heavyweight web frameworks.',
     solution:
@@ -440,6 +449,8 @@ export const projects: ProjectItem[] = [
     period: 'Jun 2025',
     category: 'Personal / Architecture',
     companyContext: 'Personal Project',
+    architectureFlow:
+      'Web Clients ➔ Spring Security Dynamic RBAC ➔ State-Machine Engine ➔ Ledger Audit ➔ PostgreSQL',
     problem:
       'Required granular role permissions for 3 distinct user groups (Admin, Sales, Print Workshop) where permission updates apply instantly without forced re-login, alongside transactional internal ledger bookkeeping across order states.',
     solution:
@@ -467,7 +478,7 @@ export const skillCategories: SkillCategory[] = [
   {
     category: 'Backend & Architecture',
     skills: [
-      'Java (8/11/17/21)',
+      'Java',
       'Spring Boot',
       'Spring Data JPA / Hibernate',
       'Spring Security',

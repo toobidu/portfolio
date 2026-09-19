@@ -30,29 +30,41 @@ export function ScrollProgress() {
       setScrollProgress(pageProgress)
 
       // Boundary conditions: top of page
-      if (scrollY <= 15) {
+      if (scrollY <= 20) {
         setActiveSection(sections[0].id)
         setTrackProgress(0)
         return
       }
 
-      // Boundary conditions: near bottom of page
-      if (totalScrollable > 0 && (winHeight + scrollY >= docHeight - 60 || pageProgress >= 98.5)) {
-        setActiveSection(sections[sections.length - 1].id)
-        setTrackProgress(1)
-        return
-      }
-
-      // Proportional section spy: target line at 35% of viewport
-      const targetY = winHeight * 0.35
-      const scrollPos = scrollY + targetY
+      // Check if user is at the bottom of the page
+      const isAtBottom = totalScrollable > 0 && winHeight + scrollY >= docHeight - 20
 
       let currentIdx = 0
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i].id)
-        if (el && el.offsetTop <= scrollPos) {
-          currentIdx = i
-          break
+
+      if (isAtBottom) {
+        // When scrolled to the bottom, sections near the bottom (Contact / Availability)
+        // may not reach the top trigger line. We identify which section is most visible from bottom up.
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sections[i].id)
+          if (!el) continue
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= winHeight * 0.65) {
+            currentIdx = i
+            break
+          }
+        }
+      } else {
+        // Reading trigger line: 100px (accounts for 56px sticky header + breathing room).
+        // This ensures concise sections like Education (~240px) are not skipped over.
+        const TRIGGER_OFFSET = 100
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sections[i].id)
+          if (!el) continue
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= TRIGGER_OFFSET) {
+            currentIdx = i
+            break
+          }
         }
       }
 
@@ -60,17 +72,17 @@ export function ScrollProgress() {
 
       // Calculate fractional progress through the current section
       const currentEl = document.getElementById(sections[currentIdx].id)
-      const currentTop = currentEl ? currentEl.offsetTop : 0
-      let currentBottom = docHeight
-      if (currentIdx < sections.length - 1) {
-        const nextEl = document.getElementById(sections[currentIdx + 1].id)
-        currentBottom = nextEl
-          ? nextEl.offsetTop
-          : currentTop + (currentEl ? currentEl.offsetHeight : 0)
+      let fraction = 0
+      if (currentEl) {
+        const rect = currentEl.getBoundingClientRect()
+        const scrolledIntoSection = Math.max(0, 100 - rect.top)
+        const sectionHeight = Math.max(1, currentEl.offsetHeight)
+        fraction = Math.min(1, Math.max(0, scrolledIntoSection / sectionHeight))
       }
 
-      const currentHeight = Math.max(1, currentBottom - currentTop)
-      const fraction = Math.min(1, Math.max(0, (scrollPos - currentTop) / currentHeight))
+      if (isAtBottom && currentIdx === sections.length - 1) {
+        fraction = 1
+      }
 
       // Interpolate along the tracker dots accurately
       const lineProgress = Math.min(1, Math.max(0, (currentIdx + fraction) / (sections.length - 1)))
@@ -87,15 +99,25 @@ export function ScrollProgress() {
       }
     }
 
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (hash && sections.some((s) => s.id === hash)) {
+        setActiveSection(hash)
+      }
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('hashchange', onHashChange)
     updateScrollState()
 
     return () => {
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('hashchange', onHashChange)
     }
   }, [])
 
   const scrollToSection = (id: string) => {
+    setActiveSection(id)
     const el = document.getElementById(id)
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' })
