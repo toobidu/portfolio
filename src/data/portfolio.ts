@@ -56,7 +56,7 @@ export const personalInfo = {
   location: 'Hanoi, Vietnam',
   resumePdf: '/To_Tien_Dung_Fullstack_Software_Engineering.pdf',
   summary:
-    'Fullstack Developer with 2+ years of hands-on experience building backend-heavy, real-time and IoT-connected systems in Java Spring Boot and ReactJS. Direct experience with message-driven architectures (MQTT, RabbitMQ), real-time media streaming (WebSocket, WebRTC, HLS, FFmpeg), and hardware/device integration (Kotlin, NMEA). Proven track record scaling platforms to 5,000+ concurrent devices, eliminating performance bottlenecks via data-driven profiling, and delivering resilient systems from API design to Linux server deployment.',
+    'Fullstack Developer with 2+ years of hands-on experience building backend-heavy, real-time and IoT-connected systems in Java Spring Boot and ReactJS. Direct experience with message-driven architectures (MQTT, RabbitMQ), real-time media streaming (WebSocket, WebRTC, HLS, FFmpeg), and hardware/device integration (Kotlin, NMEA). Proven track record scaling platforms to 1,000+ concurrent devices, eliminating performance bottlenecks via data-driven profiling, and delivering resilient systems from API design to Linux server deployment.',
   availability: {
     status: 'Open for Remote Roles',
     targetRegion: 'European & Global Distributed Teams',
